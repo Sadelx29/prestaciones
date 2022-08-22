@@ -17,7 +17,7 @@
 
     <div class="mt-4" v-for="item of prestaciones" v-bind:key="item">
       <div class="alert alert-primary" role="alert">
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-evenly">
           <div>
             <p>Salario:{{ item.salariomensual }}</p>  
           </div>
@@ -78,7 +78,7 @@ export default {
       nuevasPrestaciones: '',
       nuevoComisionado: '',
       nuevaTotalidad: '',
-      todosumado: null,
+      todosumado: 412000,
       todopromedio: null,
       tododiario: null,
       preavisado: null,
@@ -88,7 +88,8 @@ export default {
       spreaviso: null,
       snavidad: null,
       scesantia: null,
-      svacaciones: null
+      svacaciones: null,
+      tsumado: []
 
     }
   },
@@ -100,9 +101,33 @@ export default {
           comisionmensual: this.nuevoComisionado,
           totalidad: this.nuevaTotalidad
         })
+        this.tsumado.push({
+          tsumad: this.nuevaTotalidad
+        })
+        console.log(this.tsumado, 't sumado primero')
+        var ttsumado = []
+        this.tsumado = ttsumado
+        console.log(this.tsumado,'tsumado')
+        // sumar todos los salarios
+        console.log(ttsumado, 'todo sumado')
+        const initialValue = 0;
+        const sumWithInitial = ttsumado.reduce(
+        (previousValue, currentValue) => previousValue + currentValue,
+        initialValue
+          );
+
+          console.log(this.prestaciones.length, 'toy aqui')
+
+         this.todopromedio = (Math.trunc(this.todosumado) / (this.prestaciones.length)).toFixed()
+         
+
+        console.log(sumWithInitial);
         this.nuevasPrestaciones = '',
         this.nuevoComisionado = '',
         this.nuevaTotalidad = '' 
+
+  
+        
 
 
         
