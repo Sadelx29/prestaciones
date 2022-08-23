@@ -96,36 +96,29 @@ export default {
   methods: {
       prestacion (){
           this.nuevaTotalidad = Number(this.nuevasPrestaciones) + Number(this.nuevoComisionado)
+           if(this.prestaciones.length == 12){
+            return;
+          }
           this.prestaciones.push({
           salariomensual: this.nuevasPrestaciones,
           comisionmensual: this.nuevoComisionado,
           totalidad: this.nuevaTotalidad
         })
-        this.tsumado.push({
-          tsumad: this.nuevaTotalidad
-        })
-        console.log(this.tsumado, 't sumado primero')
-        var ttsumado = []
-        this.tsumado = ttsumado
-        console.log(this.tsumado,'tsumado')
-        // sumar todos los salarios
-        console.log(ttsumado, 'todo sumado')
-        const initialValue = 0;
-        const sumWithInitial = ttsumado.reduce(
-        (previousValue, currentValue) => previousValue + currentValue,
-        initialValue
-          );
 
-          console.log(this.prestaciones.length, 'toy aqui')
 
-         this.todopromedio = (Math.trunc(this.todosumado) / (this.prestaciones.length)).toFixed()
          
 
-        console.log(sumWithInitial);
+          console.log(this.prestaciones)
+
+         this.todopromedio = (Math.trunc(this.todosumado) / (this.prestaciones.length)).toFixed()
+         this.tododiario = ((this.todopromedio) / (30)).toFixed()
+         
         this.nuevasPrestaciones = '',
         this.nuevoComisionado = '',
         this.nuevaTotalidad = '' 
 
+        
+  
   
         
 
