@@ -55,7 +55,9 @@ export default {
             tiempo: null,
             month: null,
             days: null,
-            condicion: ''
+            condicion: '',
+            ordinario: 23.83,
+            intermitente: 26
         }
     },
     methods: {
