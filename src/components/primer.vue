@@ -3,7 +3,7 @@
   <div> 
     <div class="container">
         <div class="card" style="width: 100%rem;">
-     <div  class="d-flex justify-content-around">
+     <div  class="container d-flex justify-content-evenly">
         <div id="calendario">
             <h4>Seleccione las fechas</h4>
             <input type="date" class="border-bottom" v-model="fecha1">
@@ -14,7 +14,9 @@
                 <p>Años:{{tiempo}}</p>
                 <p>Meses:{{month}}</p>
                 <p>Dias:{{days}}</p>
+                
             </div>
+             
             
 
         </div>
@@ -22,15 +24,19 @@
             <ul id="picker">
                 <h4>Seleccione el tipo de calculo</h4>
              <li>
-                 <input type="radio" id="yes" value="ordinario" v-model="tipodecalculo">
-                 <label for="mensual">Ordinario</label>
+                 <input type="radio" value=23.83 v-model="tipodecalculo">
+                 <label for=23.83>Ordinario</label>
 
-                <input type="radio" id="no" value="intermitente" v-model="tipodecalculo">
-                <label for="no">Intermitente</label>
+                <input type="radio" value=26 v-model="tipodecalculo">
+                <label for=26>Intermitente</label>
             </li>
             <br>
             <li>
                 <p>Condicion: {{condicion}}</p>
+                <p>Ordinario: Jornada ordinaria es la ejecutada por trabajadores dentro de un período que no exceda de ocho (8) horas al día ni de cuarenta y cuatro (44) a la semana</p>
+                <p>Intermitente: Jornada intermitente es la ejecutada por trabajadores que requieren su sola presencia en el lugar de trabajo, los cuales pudieran laborar consecuentemente por un periodo de hasta diez (10) horas diarias. Estos trabajadores son: los porteros, los ascensoristas, los serenos, los guardianes, los conserjes, los barberos, los sastres, los empleados de bombas para el expendio de gasolina, los capataces, los mozos de cafés y restaurantes, las manicuristas, los camareros, los trabajadores ocupados en vehículos de transporte terrestre que presten servicios intermitentes o entre dos o más municipios y los trabajadores del campo.
+                Referencias: resolución 04/93 del Ministerio de Trabajo, sobre trabajadores que ejecutan labores intermitentes, arts. 281, 284 y 285 del Código de Trabajo y art. 78 del Reglamento 258/93 para la aplicación del Código de Trabajo.   </p>
+                
             </li>
             
             </ul>
@@ -81,7 +87,7 @@
       <p>Salario promedio Mensual: {{todopromedio}}</p>
       <p>Salario promedio Diario: {{tododiario}}</p>
     </div>
-    <div class="container" id="validaciones">
+    <div class="container " id="validaciones">
       <div class="">
         <div>
         <p><input type="radio"  value="preaviso" v-model="preaviso"> Ha sido usted preavisado?{{preavisado}}</p>
@@ -122,7 +128,7 @@ export default {
       nuevasPrestaciones: '',
       nuevoComisionado: '',
       nuevaTotalidad: '',
-      todosumado: 412000,
+      todosumado: 420000,
       todopromedio: null,
       tododiario: null,
       preavisado: null,
@@ -159,10 +165,7 @@ export default {
           totalidad: this.nuevaTotalidad
         })
 
-
-         
-
-          console.log(this.prestaciones)
+        console.log(this.prestaciones)
 
         this.todopromedio = (Math.trunc(this.todosumado) / (this.prestaciones.length)).toFixed()
         this.tododiario = ((this.todopromedio) / (30)).toFixed()
@@ -171,24 +174,16 @@ export default {
         this.nuevoComisionado = '',
         this.nuevaTotalidad = '' 
 
-        
-  
-        
-
-
-        
-
       },
-      validar () {
-         
-        
-
-        
-
-
-
-       },
        calcular(){
+
+        // console.log(this.intermitente, 'intermitente')
+        // console.log(this.ordinario,'ordinario')
+        // 
+        // console.log(this.tipodecalculo)
+        // console.log(this.respuesta)
+        // console.log(this.fecha1)
+        // console.log(this.condicion, 'soy condicion')
 
         const fecha2 = new Date()
         const anoactual = parseInt(fecha2.getFullYear());
@@ -221,39 +216,50 @@ export default {
         this.month = mes
         this.days = dias
         console.log(ano,mes,dias)
-        
-        
 
-        if(this.tipodecalculo === 'ordinario'){
-           return this.condicion = 'Jornada ordinaria es la ejecutada por trabajadores dentro de un período que no exceda de ocho (8) horas al día ni de cuarenta y cuatro (44) a la semana'
-        }
-        if(this.tipodecalculo === 'intermitente'){
-            return this.condicion = `Jornada intermitente es la ejecutada por trabajadores que requieren su sola presencia en el lugar de trabajo, los cuales pudieran laborar consecuentemente por un periodo de hasta diez (10) horas diarias. Estos trabajadores son: los porteros, los ascensoristas, los serenos, los guardianes, los conserjes, los barberos, los sastres, los empleados de bombas para el expendio de gasolina, los capataces, los mozos de cafés y restaurantes, las manicuristas, los camareros, los trabajadores ocupados en vehículos de transporte terrestre que presten servicios intermitentes o entre dos o más municipios y los trabajadores del campo.
-
-        Referencias: resolución 04/93 del Ministerio de Trabajo, sobre trabajadores que ejecutan labores intermitentes, arts. 281, 284 y 285 del Código de Trabajo y art. 78 del Reglamento 258/93 para la aplicación del Código de Trabajo.   `
-        }
-
-        console.log(this.tipodecalculo)
-        console.log(this.respuesta)
-        console.log(this.fecha1)
-        console.log(this.condicion, 'soy condicion')
-
-
+        console.log(this.tipodecalculo, 'soy tipo')
+  
         if(mes >= 3){
-          console.log('3 meses multiplicar por 7', (Math.trunc(this.todosumado / this.prestaciones.length * 7)))
-          this.spreaviso = (Math.trunc(this.todosumado / this.prestaciones.length * 7))
+          
+          console.log('3 meses multiplicar por 7', (Math.trunc(2 * this.tipodecalculo)))
+          this.spreaviso = (Math.trunc(this.todosumado / this.prestaciones.length))
+          console.log(this.spreaviso)
         } 
         if(mes >= 6){
+          console.log('valen 14')
           console.log('6 meses se multiplica por catorce',(Math.trunc(this.todosumado / this.prestaciones.length * 14)))
-          this.preavisado = (Math.trunc(this.todosumado / this.prestaciones.length * 14))
+          this.spreaviso = (Math.trunc(this.todosumado / this.prestaciones.length * 14))
         }
         if(ano >= 1){
+          console.log('valen 28')
           console.log('un año se multiplica por 28',(Math.trunc(this.todosumado / this.prestaciones.length * 28)))
-          this.preavisado = (Math.trunc(this.todosumado / this.prestaciones.length * 28))
+          this.spreaviso = (Math.trunc(this.todosumado / this.prestaciones.length * 28))
         }
 
-  
+        console.log(this.tipodecalculo, 'tipo de calculo')
+        console.log(this.intermitente)
+        console.log(this.ordinario)
 
+        if(this.tipodecalculo == 'ordinario'){
+          return this.condicion = '';
+            
+        }
+
+        if(this.tipodecalculo == 'intermitente'){
+          return this.condicion = ``
+        }
+
+
+        if(this.tipodecalculo == true){
+           return console.log('hello')
+         } 
+         if(this.tipodecalculo == 'intermitente' ) {
+           return this.tipodecalculo = this.intermitente
+         }
+         console.log(this.tipodecalculo, 'soy tipo')
+
+
+         
        }
     }
 }
