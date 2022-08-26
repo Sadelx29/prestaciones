@@ -10,12 +10,7 @@
         
             <input type="date" class="border-bottom" v-model="fecha2">
 
-             <div id="fecha" class="container d-flex justify-content-evenly">
-                <p>Años:{{tiempo}}</p>
-                <p>Meses:{{month}}</p>
-                <p>Dias:{{days}}</p>
-                
-            </div>
+            
              
             
 
@@ -90,19 +85,19 @@
     <div class="container " id="validaciones">
       <div class="">
         <div>
-        <p><input type="radio"  value="preaviso" v-model="preaviso"> Ha sido usted preavisado?{{preavisado}}</p>
+        <p><input type="radio"  value="si" v-model="preaviso"> Ha sido usted preaviso?{{preaviso}}</p>
           <p>{{spreaviso}}</p>
         </div>
         <div>
-        <p><input type="radio"  value="cesantia" v-model="cesantia"> Desea agregar cesantia?{{cesantia}}</p>
+        <p><input type="radio"  value="si" v-model="cesantia"> Desea agregar cesantia?{{cesantia}}</p>
         <p>{{scesantia}}</p>
         </div>
         <div>
-        <p><input type="radio"  value="vacaciones" v-model="vacaciones"> Ha tomado vacaciones del año?{{vacaciones}}</p>
+        <p><input type="radio"  value="si" v-model="vacaciones"> Ha tomado vacaciones del año?{{vacaciones}}</p>
         <p>{{svacaciones}}</p>
         </div>
         <div>
-        <p><input type="radio"  value="navidad" v-model="navidad"> Desea incluir salario de navidad?{{navidad}}</p>
+        <p><input type="radio"  value="si" v-model="navidad"> Desea incluir salario de navidad?{{navidad}}</p>
           <p>{{snavidad}}</p>
         </div>
 
@@ -112,6 +107,16 @@
 
     </div>
        <button type="button" class="btn btn-primary" @click="calcular">Calcular</button>
+        <div id="fecha" class="mx-auto" style="width: 500px;">
+              <p>Tiempo Laborado Años:{{tiempo}} Meses:{{month}} Dias:{{days}}</p>
+                
+              
+            </div>
+            <div id="fecha" class="mx-auto" style="width: 500px;">
+              <p>Total a recibir: {{totalrecibir}}</p>
+                
+              
+            </div>
  
       
   </div>
@@ -132,7 +137,7 @@ export default {
       todosumado: 420000,
       todopromedio: null,
       tododiario: null,
-      preavisado: null,
+      preaviso: null,
       cesantia: null,
       vacaciones: null,
       navidad: null,
@@ -150,7 +155,8 @@ export default {
       days: null,
       condicion: '',
       ordinario: 23.83,
-      intermitente: 26
+      intermitente: 26,
+      totalrecibir: null
 
     }
   },
@@ -219,7 +225,13 @@ export default {
         console.log(ano,mes,dias)
 
         console.log(this.tipodecalculo, 'soy tipo')
+
+        this.totalrecibir =  this.snavidad + this.svacaciones + this.scesantia + this.spreaviso
+
+
+
         //CALCULO DE PREAVISO
+
         if(mes >= 3){
           
           console.log('3 meses multiplicar por 7', (this.tipodecalculo))
@@ -246,18 +258,26 @@ export default {
           console.log(this.spreaviso)
           this.spreaviso = (Math.trunc(this.spreaviso * 28))
         }
-        //CALCULO DE VACACIONES
+         console.log(this.preaviso, 'soy preaviso')
+         if(this.preaviso === 'si'){
+           return  this.preaviso
+         } else{
+           this.spreaviso =  0
+         }
+
         
-        // console.log(this.prestaciones.pop().totalidad,'ultimo mes')
-        // if(ano >= 1){
+
+        
+       
+        //  if(ano >= 1){
           
-        //   console.log('1 año multiplicar por 14', (this.tipodecalculo))
-        //   this.svacaciones = (Math.trunc(1000 / this.tipodecalculo))
-        //   console.log(this.scesantia)
-        //   this.svacaciones = (Math.trunc(this.svacaciones / this.tipodecalculo))
-        //   console.log(this.svacaciones)
-        //   this.svacaciones = (Math.trunc(this.svacaciones * 6))
-        // } 
+        //    console.log('1 año multiplicar por 14', (this.tipodecalculo))
+        //    this.svacaciones = (Math.trunc(ultimomes / this.tipodecalculo))
+        //    console.log(this.svacaciones)
+        //    this.svacaciones = (Math.trunc(this.svacaciones / this.tipodecalculo))
+        //    console.log(this.svacaciones)
+        //    this.svacaciones = (Math.trunc(this.svacaciones * 6))
+        //  } 
         // if(ano >= 5){
         //   console.log('5 años se multiplica por 18',(this.tipodecalculo))
         //   this.svacaciones = (Math.trunc(this.todosumado / this.prestaciones.length))
@@ -270,6 +290,10 @@ export default {
 
 
          //CALCULO DE CESANTIA
+        
+        
+        console.log(this.scesantia)
+
         if(mes >= 3){
           
           console.log('3 meses multiplicar por 6', (this.tipodecalculo))
@@ -304,14 +328,48 @@ export default {
           this.scesantia = (Math.trunc(this.scesantia / this.tipodecalculo))
           console.log(this.scesantia)
           this.scesantia = (Math.trunc(this.scesantia * 21))
+        }
+        
 
+        console.log(this.cesantia, 'soy cesantia') 
+        if(this.cesantia === 'si'){
+          return this.cesantia
+        } else{
+          this.scesantia =  0
         }
 
-
+        //CALCULO DE VACACIONES
+        //this.vacaciones = ''
+        console.log(this.vacaciones, 'soy vacaciones')
+        this.svacaciones =  2 
+        if(this.vacaciones === 'si'){
+          return this.vacaciones
+        } else{
+          this.svacaciones =  0
+        }
+        
+        console.log(this.vacaciones)
 
          //CALCULO DE NAVIDAD
-        this.snavidad = (this.todosumado / this.prestaciones.length)
-         
+        
+        
+          console.log(this.navidad, 'soy navidad') 
+          this.snavidad = (Math.trunc(this.todosumado / this.prestaciones.length))
+
+
+        if(this.navidad === 'si'){
+          return this.snavidad
+        } else {
+          this.snavidad =  0
+        }
+
+        console.log(this.scesantia,this.spreaviso,this.snavidad,this.svacaciones, 'soy todo')
+
+
+
+        // this.totalrecibir = (this.scesantia) + (this.spreaviso) + (this.svacaciones) + (this.snavidad)
+        // console.log(this.totalrecibir, 'total recibir')
+
        }
     }
 }
