@@ -120,6 +120,7 @@
 
 </template>
 <script>
+
 export default {
   name: 'PriMer',
   data () {
@@ -218,47 +219,98 @@ export default {
         console.log(ano,mes,dias)
 
         console.log(this.tipodecalculo, 'soy tipo')
-  
+        //CALCULO DE PREAVISO
         if(mes >= 3){
           
-          console.log('3 meses multiplicar por 7', (Math.trunc(2 * this.tipodecalculo)))
+          console.log('3 meses multiplicar por 7', (this.tipodecalculo))
           this.spreaviso = (Math.trunc(this.todosumado / this.prestaciones.length))
           console.log(this.spreaviso)
+          this.spreaviso = (Math.trunc(this.spreaviso / this.tipodecalculo))
+          console.log(this.spreaviso)
+          this.spreaviso = (Math.trunc(this.spreaviso * 7))
         } 
         if(mes >= 6){
-          console.log('valen 14')
-          console.log('6 meses se multiplica por catorce',(Math.trunc(this.todosumado / this.prestaciones.length * 14)))
-          this.spreaviso = (Math.trunc(this.todosumado / this.prestaciones.length * 14))
+          console.log('6 meses se multiplica por catorce',(this.tipodecalculo))
+          this.spreaviso = (Math.trunc(this.todosumado / this.prestaciones.length))
+          console.log(this.spreaviso)
+          this.spreaviso = (Math.trunc(this.spreaviso / this.tipodecalculo))
+          console.log(this.spreaviso)
+          this.spreaviso = (Math.trunc(this.spreaviso * 14))
         }
         if(ano >= 1){
-          console.log('valen 28')
-          console.log('un año se multiplica por 28',(Math.trunc(this.todosumado / this.prestaciones.length * 28)))
-          this.spreaviso = (Math.trunc(this.todosumado / this.prestaciones.length * 28))
+          
+          console.log('un año se multiplica por 28',(this.tipodecalculo))
+          this.spreaviso = (Math.trunc(this.todosumado / this.prestaciones.length))
+          console.log(this.spreaviso)
+          this.spreaviso = (Math.trunc(this.spreaviso / this.tipodecalculo))
+          console.log(this.spreaviso)
+          this.spreaviso = (Math.trunc(this.spreaviso * 28))
+        }
+        //CALCULO DE VACACIONES
+        
+        // console.log(this.prestaciones.pop().totalidad,'ultimo mes')
+        // if(ano >= 1){
+          
+        //   console.log('1 año multiplicar por 14', (this.tipodecalculo))
+        //   this.svacaciones = (Math.trunc(1000 / this.tipodecalculo))
+        //   console.log(this.scesantia)
+        //   this.svacaciones = (Math.trunc(this.svacaciones / this.tipodecalculo))
+        //   console.log(this.svacaciones)
+        //   this.svacaciones = (Math.trunc(this.svacaciones * 6))
+        // } 
+        // if(ano >= 5){
+        //   console.log('5 años se multiplica por 18',(this.tipodecalculo))
+        //   this.svacaciones = (Math.trunc(this.todosumado / this.prestaciones.length))
+        //   console.log(this.scesantia)
+        //   this.svacaciones = (Math.trunc(this.svacaciones / this.tipodecalculo))
+        //   console.log(this.scesantia)
+        //   this.svacaciones = (Math.trunc(this.svacaciones * 13))
+        // }
+
+
+
+         //CALCULO DE CESANTIA
+        if(mes >= 3){
+          
+          console.log('3 meses multiplicar por 6', (this.tipodecalculo))
+          this.scesantia = (Math.trunc(this.todosumado / this.prestaciones.length))
+          console.log(this.scesantia)
+          this.scesantia = (Math.trunc(this.scesantia / this.tipodecalculo))
+          console.log(this.scesantia)
+          this.scesantia = (Math.trunc(this.scesantia * 6))
+        } 
+        if(mes >= 6){
+          console.log('6 meses se multiplica por 13',(this.tipodecalculo))
+          this.scesantia = (Math.trunc(this.todosumado / this.prestaciones.length))
+          console.log(this.scesantia)
+          this.scesantia = (Math.trunc(this.scesantia / this.tipodecalculo))
+          console.log(this.scesantia)
+          this.scesantia = (Math.trunc(this.scesantia * 13))
+        }
+        if(ano >= 1){
+          
+          console.log('un año se multiplica por 21',(this.tipodecalculo))
+          this.scesantia = (Math.trunc(this.todosumado / this.prestaciones.length))
+          console.log(this.scesantia)
+          this.scesantia = (Math.trunc(this.scesantia / this.tipodecalculo))
+          console.log(this.scesantia)
+          this.scesantia = (Math.trunc(this.scesantia * 21))
+        }
+        if (ano >= 5){
+
+          console.log('cinco año se multiplica por 23',(this.tipodecalculo))
+          this.scesantia = (Math.trunc(this.todosumado / this.prestaciones.length))
+          console.log(this.scesantia)
+          this.scesantia = (Math.trunc(this.scesantia / this.tipodecalculo))
+          console.log(this.scesantia)
+          this.scesantia = (Math.trunc(this.scesantia * 21))
+
         }
 
-        console.log(this.tipodecalculo, 'tipo de calculo')
-        console.log(this.intermitente)
-        console.log(this.ordinario)
-
-        if(this.tipodecalculo == 'ordinario'){
-          return this.condicion = '';
-            
-        }
-
-        if(this.tipodecalculo == 'intermitente'){
-          return this.condicion = ``
-        }
 
 
-        if(this.tipodecalculo == true){
-           return console.log('hello')
-         } 
-         if(this.tipodecalculo == 'intermitente' ) {
-           return this.tipodecalculo = this.intermitente
-         }
-         console.log(this.tipodecalculo, 'soy tipo')
-
-
+         //CALCULO DE NAVIDAD
+        this.snavidad = (this.todosumado / this.prestaciones.length)
          
        }
     }
