@@ -5,6 +5,13 @@
         <div class="card" style="width: 100%rem;">
      <div  class="container d-flex justify-content-evenly">
         <div id="calendario">
+         <h4>Datos del solicitante</h4>
+         <div id="intro">
+         <p>Cedula<input class="border-bottom" type="number"></p>
+         <p>Nombre<input class="border-bottom" type="text" name="" id=""></p>
+         <p>Empresa<input class="border-bottom" type="text"></p>
+         </div>
+
             <h4>Seleccione las fechas</h4>
             <input type="date" class="border-bottom" v-model="fecha1">
         
@@ -15,7 +22,7 @@
             
 
         </div>
-        <div id="tipodecalculo">
+        <div id="tipodecalculo" class="col-6">
             <ul id="picker">
                 <h4>Seleccione el tipo de calculo</h4>
              <li>
@@ -26,6 +33,7 @@
                 <label for=26>Intermitente</label>
             </li>
             <br>
+            <div id="texto" class="">
             <li>
                 <p>Condicion: {{condicion}}</p>
                 <p>Ordinario: Jornada ordinaria es la ejecutada por trabajadores dentro de un período que no exceda de ocho (8) horas al día ni de cuarenta y cuatro (44) a la semana</p>
@@ -33,6 +41,7 @@
                 Referencias: resolución 04/93 del Ministerio de Trabajo, sobre trabajadores que ejecutan labores intermitentes, arts. 281, 284 y 285 del Código de Trabajo y art. 78 del Reglamento 258/93 para la aplicación del Código de Trabajo.   </p>
                 
             </li>
+            </div>
             
             </ul>
             
@@ -49,40 +58,26 @@
   <div class="container mt-5" id="form">
 
     <h3>Ingresar salarios</h3>
-    <div id="ingresars" class="d-flex justify-content-around">
+    <br>
+     <button class="btn btn-primary" @click="prestacion">Agregar</button>
 
+    <div id="ingresars" class="d-flex justify-content-around">
     <input type="number" class="form-control my-3" v-model="nuevasPrestaciones" placeholder="Ingrese el sueldo aqui"> 
     <br>
     <input type="number" class="form-control my-3" v-model="nuevoComisionado"  placeholder="Ingrese las comisiones aqui">
-
-    </div>
-    <button class="btn btn-primary" @click="prestacion">Agregar</button>
-  
-
-    <div class="mt-4" v-for="item of prestaciones" v-bind:key="item">
-      <div class="alert alert-primary" role="alert">
-        <div class="d-flex justify-content-evenly">
-          <div>
-            <p>Salario:{{ item.salariomensual }}</p>  
-          </div>
-          <div>
-            <p> Comision:{{ item.comisionmensual }}</p>
-          </div>
-          <div>
-             <p> total:{{ item.totalidad }}</p>
-          </div>
-        </div>
-      </div>
-      
-
-    </div>
-       
-    <div id="porcentajes" class="container d-flex justify-content-evenly">
+      <div id="porcentajes" class="container d-flex justify-content-evenly">
       <p>Sumatoria de los salarios: {{todosumado}}</p>
+      <br>
       <p>Salario promedio Mensual: {{todopromedio}}</p>
-      <p>Salario promedio Diario: {{tododiario}}</p>
+      <br>
+      <p>Salario  Diario: {{tododiario}}  </p>
+      <br>
     </div>
-    <div class="container " id="validaciones">
+    
+    
+    
+    </div>
+          <div class="container " id="validaciones">
       <div class="">
         <div>
         <p><input type="radio"  value="si" v-model="preaviso"> Ha sido usted preaviso?{{preaviso}}</p>
@@ -100,23 +95,51 @@
         <p><input type="radio"  value="si" v-model="navidad"> Desea incluir salario de navidad?{{navidad}}</p>
           <p>{{snavidad}}</p>
         </div>
+      </div>
+       <button type="button" class="btn btn-primary" @click="calcular">Calcular</button>
+    </div>
+       
+       
+    
+    
+    <div id="finales"></div>
+        <div id="fecha"  style="width: 300px;">
+              <p>Tiempo Laborado Años:{{tiempo}} Meses:{{month}} Dias:{{days}}</p>
+            </div>
+            <div id="fecha"  style="width: 300px;">
+              <p>Total a recibir: {{totalrecibir}}</p>
+            </div>
+    </div>
+    
+     
 
-
+  
+   
+  
+      <div id="iteracion">
+      
+     <div class="mt-4 col-6" id="meses" v-for="item of prestaciones" v-bind:key="item">
+      <div class="alert alert-primary" role="alert">
+        <div id="mese" class="d-flex justify-content-evenly">
+          <div>
+            <p>Salario:{{ item.salariomensual }}</p>  
+          </div>
+          <div>
+            <p> Comision:{{ item.comisionmensual }}</p>
+          </div>
+          <div>
+             <p> total:{{ item.totalidad }}</p>
+          </div>
+        </div>
         
       </div>
-
     </div>
-       <button type="button" class="btn btn-primary" @click="calcular">Calcular</button>
-        <div id="fecha" class="mx-auto" style="width: 500px;">
-              <p>Tiempo Laborado Años:{{tiempo}} Meses:{{month}} Dias:{{days}}</p>
-                
-              
-            </div>
-            <div id="fecha" class="mx-auto" style="width: 500px;">
-              <p>Total a recibir: {{totalrecibir}}</p>
-                
-              
-            </div>
+    
+   
+    
+
+
+                 
  
       
   </div>
@@ -134,7 +157,7 @@ export default {
       nuevasPrestaciones: '',
       nuevoComisionado: '',
       nuevaTotalidad: '',
-      todosumado: 420000,
+      todosumado: null,
       todopromedio: null,
       tododiario: null,
       preaviso: null,
@@ -172,7 +195,17 @@ export default {
           totalidad: this.nuevaTotalidad
         })
 
+        console.log(this.nuevaTotalidad, 'soy totalidad')
+
+        const sumWithInitial = this.prestaciones.reduce(
+        (nuevaTotalidad, currentValue) => nuevaTotalidad + currentValue.totalidad,
+          0
+        );
+        this.todosumado = sumWithInitial
+
         console.log(this.prestaciones)
+
+        console.log(this.prestaciones.length,'soy el ultimo')
 
         this.todopromedio = (Math.trunc(this.todosumado) / (this.prestaciones.length)).toFixed()
         this.tododiario = ((this.todopromedio) / (30)).toFixed()
@@ -180,6 +213,7 @@ export default {
         this.nuevasPrestaciones = '',
         this.nuevoComisionado = '',
         this.nuevaTotalidad = '' 
+        
 
       },
        calcular(){
@@ -406,6 +440,8 @@ p {
   text-align: center;
   margin-top: 20px;
   margin: 15px;
+  
+
 }
 #ingresar {
   padding: 10px;
@@ -456,5 +492,26 @@ p {
   text-align: center;
   margin-top: 20px;
   margin: 15px;
+  text-align: center;
+}
+#texto {
+  margin-bottom: 0 0px;
+}
+#intro input{
+  border: 0ch;
+}
+#validaciones{
+  text-align: right;
+}
+
+#btn {
+  align-content: right;
+}
+#iteracione{
+  align-content: left;
+}
+
+#finales{
+  
 }
 </style>
